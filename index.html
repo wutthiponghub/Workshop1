@@ -129,6 +129,7 @@
             <button type="button" ng-click="resetBMI()" class="btn btn-default">Reset</button>
         </form>
         <h1 ng-if="bmi > 0 && bmi <= 100"> <span id="numberanimation" ng-bind="bmi | number:2"> </span> {{meaning}}</h1>
+        {{w / (h/100 * h/100) | number:2}}
     </div>
 
 </body>
