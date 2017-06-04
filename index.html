@@ -17,7 +17,6 @@
         var app = angular.module("myApp", []);
         app.controller('myCtrl', function($scope) {
 
-
             $scope.bmidata = [{
                 "min": 0,
                 "max": 18.5,
@@ -126,7 +125,7 @@
             <button type="submit" class="btn btn-default">Submit</button>
             <button type="button" ng-click="resetBMI()" class="btn btn-default">Reset</button>
         </form>
-        <h1 ng-if="bmi > 0 && bmi <= 100"> <span id="numberanimation"> {{bmi | number:2}} </span> {{meaning}}</h1>
+        <h1 ng-if="bmi > 0 && bmi <= 100"> <span id="numberanimation" ng-bind="bmi | number:2"> </span> {{meaning}}</h1>
     </div>
 
 </body>
