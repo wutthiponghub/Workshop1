@@ -45,14 +45,28 @@
             $scope.bmicalculator = function() {
                 var tmp = $scope.h / 100;
                 $scope.bmi = $scope.w / (tmp * tmp);
+                $scope.resetCSS();
                 $scope.meaning = $scope.bmimeaning($scope.bmi);
             };
 
             $scope.bmimeaning = function(bmi) {
                 for (i = 0; i < $scope.bmidata.length; i++) {
                     if (bmi >= $scope.bmidata[i].min && bmi < $scope.bmidata[i].max) {
+                        if (i < 2) {
+                            $scope.bmidata[i].css = 'success';
+                        } else if (i == 2) {
+                            $scope.bmidata[i].css = 'warning';
+                        } else if (i > 2) {
+                            $scope.bmidata[i].css = 'danger';
+                        }
                         return $scope.bmidata[i].risk;
                     }
+                }
+            };
+
+            $scope.resetCSS = function() {
+                for (i = 0; i < $scope.bmidata.length; i++) {
+                    $scope.bmidata[i].css = '';
                 }
             };
 
@@ -72,7 +86,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="tmp in bmidata">
+            <tr ng-repeat="tmp in bmidata" ng-class="tmp.css">
                 <td>มากกว่า {{tmp.min}} แต่น้อยกว่า {{tmp.max}}</td>
                 <td>{{tmp.meaning}}</td>
                 <td>{{tmp.risk}}</td>
