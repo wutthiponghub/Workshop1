@@ -45,8 +45,16 @@
             $scope.bmicalculator = function() {
                 var tmp = $scope.h / 100;
                 $scope.bmi = $scope.w / (tmp * tmp);
+                $scope.meaning = $scope.bmimeaning($scope.bmi);
             };
 
+            $scope.bmimeaning = function(bmi) {
+                for (i = 0; i < $scope.bmidata.length; i++) {
+                    if (bmi >= $scope.bmidata[i].min && bmi < $scope.bmidata[i].max) {
+                        return $scope.bmidata[i].risk;
+                    }
+                }
+            };
 
         });
     </script>
@@ -71,6 +79,22 @@
             </tr>
         </tbody>
     </table>
+
+    <div class="text-center">
+        <form ng-submit="bmicalculator()">
+            <div class="form-group">
+                <label for="weight">Weight (KG)</label>
+                <input required type="number" ng-model="w" class="form-control" id="weight" placeholder="Please input your weight (KG)">
+            </div>
+            <div class="form-group">
+                <label for="height">Height (CM)</label>
+                <input required type="number" ng-model="h" class="form-control" id="height" placeholder="Please input your height (KG)">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+        <h1>{{bmi | number:2}} {{meaning}}</h1>
+    </div>
+
 </body>
 
 </html>
