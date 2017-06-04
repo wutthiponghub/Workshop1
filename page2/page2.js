@@ -1,14 +1,26 @@
-        app.controller('page2Controller', function($scope, $http) {
+        app.controller('page2Controller', function($scope, bmidatajson) {
 
             $scope.h = 180;
             $scope.w = 80;
 
+            // $scope.getbmidata = function() {
+            //     $http.get("../data/bmidata.json")
+            //         .then(function(response) {
+            //             $scope.bmidata = response.data;
+            //             console.log(response);
+            //         });
+            // }
+
             $scope.getbmidata = function() {
-                $http.get("../data/bmidata.json")
-                    .then(function(response) {
-                        $scope.bmidata = response.data;
-                        console.log(response);
-                    });
+                bmidatajson.getData().then(
+                    function(data) {
+                        console.log(data);
+                        $scope.bmidata = data;
+                    },
+                    function(error) {
+                        console.log(error);
+                    }
+                );
             }
 
             $scope.bmicalculator = function() {
