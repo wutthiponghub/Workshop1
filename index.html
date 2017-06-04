@@ -1,140 +1,96 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="myApp" ng-controller="myCtrl">
+<html lang="en" ng-app="myApp">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Workshop1</title>
+    <base href="http://127.0.0.1:8080/" />
     <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-route.min.js"></script>
+    <script src="app.js"></script>
+
+    <!--Controller-->
+    <script src="page1/page1.js"></script>
+    <script src="page2/page2.js"></script>
+
+    <!--Library-->
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/angular.min.js"></script>
-
     <script src="js/jquery.animateNumber.min.js"></script>
 
-    <script>
-        var app = angular.module("myApp", []);
-        app.controller('myCtrl', function($scope) {
-
-            $scope.h = 180;
-            $scope.w = 80;
-
-            $scope.bmidata = [{
-                "min": 0,
-                "max": 18.5,
-                "meaning": "น้ำหนักน้อย (ผอม)",
-                "risk": "มากกว่าคนปกติ"
-            }, {
-                "min": 18.5,
-                "max": 23.0,
-                "meaning": "ปกติ (สุขภาพดี)",
-                "risk": "เท่าคนปกติ"
-            }, {
-                "min": 23.0,
-                "max": 25.0,
-                "meaning": "ท้วม (โรคอ้วนระดับ 1)",
-                "risk": "อันตรายระดับที่ 1"
-            }, {
-                "min": 25.0,
-                "max": 30.0,
-                "meaning": "อ้วน (โรคอ้วนระดับ 2)",
-                "risk": "อันตรายระดับที่ 2"
-            }, {
-                "min": 30.0,
-                "max": 100.0,
-                "meaning": "อ้วนมาก (โรคอ้วนระดับ 3)",
-                "risk": "อันตรายระดับที่ 3"
-            }];
-
-            $scope.bmicalculator = function() {
-                var tmp = $scope.h / 100;
-                $scope.bmi = $scope.w / (tmp * tmp);
-
-                $('#numberanimation').animateNumber({
-                    number: $scope.bmi.toFixed(2),
-                    numberStep: function(now, tween) {
-                        var target = $(tween.elem);
-                        target
-                            .prop('number', now)
-                            .text(now.toFixed(2));
-                    }
-                });
-
-                $scope.resetCSS();
-                $scope.meaning = $scope.bmimeaning($scope.bmi);
-            };
-
-            $scope.bmimeaning = function(bmi) {
-                for (i = 0; i < $scope.bmidata.length; i++) {
-                    if (bmi >= $scope.bmidata[i].min && bmi < $scope.bmidata[i].max) {
-                        if (i < 2) {
-                            $scope.bmidata[i].css = 'success';
-                        } else if (i == 2) {
-                            $scope.bmidata[i].css = 'warning';
-                        } else if (i > 2) {
-                            $scope.bmidata[i].css = 'danger';
-                        }
-                        return $scope.bmidata[i].risk;
-                    }
-                }
-            };
-
-            $scope.resetCSS = function() {
-                // for (i = 0; i < $scope.bmidata.length; i++) {
-                //     $scope.bmidata[i].css = '';
-                // }
-                for (i in $scope.bmidata) {
-                    $scope.bmidata[i].css = '';
-                }
-            };
-            $scope.resetBMI = function() {
-                $scope.bmi = 0;
-            };
-        });
-    </script>
 
 </head>
 
 <body>
-    <h2>ตารางแปลผลค่า BMI</h2>
-    <div class="form-group">
-        <label for="filter">Filter</label>
-        <input type="text" ng-model="textfilter" class="form-control" id="filter" placeholder="Filter by input text">
-    </div>
-    <table class="table table-hover table-bordered">
-        <thead>
-            <tr>
-                <td><strong>BMI kg/m2</strong></td>
-                <td><strong>อยู่ในเกณท์</strong></td>
-                <td><strong>ภาวะเสี่ยงต่อโรค</strong></td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="tmp in bmidata | filter: textfilter  | orderBy: 'risk'" ng-class="tmp.css">
-                <td>มากกว่า {{tmp.min}} แต่น้อยกว่า {{tmp.max}}</td>
-                <td>{{tmp.meaning}}</td>
-                <td>{{tmp.risk}}</td>
-            </tr>
-        </tbody>
-    </table>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+                <a class="navbar-brand" href="#">Brand</a>
+            </div>
 
-    <div class="text-center" ng-init="h=190;w=70;">
-        <form ng-submit="bmicalculator()">
-            <div class="form-group">
-                <label for="weight">Weight (KG)</label>
-                <input required type="number" ng-model="w" ng-change="bmicalculator()" class="form-control" id="weight" placeholder="Please input your weight (KG)">
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li ng-class="{ active: isActive('/page1')}"><a href="page1">Page1 <span class="sr-only">(current)</span></a></li>
+                    <li ng-class="{ active: isActive('/page2')}"><a href="page2">Page2</a></li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">One more separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Link</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
-            <div class="form-group">
-                <label for="height">Height (CM)</label>
-                <input required type="number" ng-model="h" ng-change="bmicalculator()" class="form-control" id="height" placeholder="Please input your height (KG)">
-            </div>
-            <button type="submit" class="btn btn-default">Submit</button>
-            <button type="button" ng-click="resetBMI()" class="btn btn-default">Reset</button>
-        </form>
-        <h1 ng-if="bmi > 0 && bmi <= 100"> <span id="numberanimation" ng-bind="bmi | number:2"> </span> {{meaning}}</h1>
-        {{w / (h/100 * h/100) | number:2}}
-    </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <ng-view></ng-view>
+
+    <br>
+    <footer class="footer">
+        <div class="container">
+            <p class="text-muted text-center">Place sticky footer content here.</p>
+        </div>
+    </footer>
 
 </body>
 
