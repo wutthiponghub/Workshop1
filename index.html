@@ -65,7 +65,10 @@
             };
 
             $scope.resetCSS = function() {
-                for (i = 0; i < $scope.bmidata.length; i++) {
+                // for (i = 0; i < $scope.bmidata.length; i++) {
+                //     $scope.bmidata[i].css = '';
+                // }
+                for (i in $scope.bmidata) {
                     $scope.bmidata[i].css = '';
                 }
             };
