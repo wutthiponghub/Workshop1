@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app>
+<html lang="en" ng-app="myApp" ng-controller="myCtrl">
 
 <head>
     <meta charset="utf-8">
@@ -10,12 +10,67 @@
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/angular.min.js"></script>
+
+    <script>
+        var app = angular.module("myApp", []);
+        app.controller('myCtrl', function($scope) {
+
+            $scope.bmidata = [{
+                "min": 0,
+                "max": 18.5,
+                "meaning": "น้ำหนักน้อย (ผอม)",
+                "risk": "มากกว่าคนปกติ"
+            }, {
+                "min": 18.5,
+                "max": 23.0,
+                "meaning": "ปกติ (สุขภาพดี)",
+                "risk": "เท่าคนปกติ"
+            }, {
+                "min": 23.0,
+                "max": 25.0,
+                "meaning": "ท้วม (โรคอ้วนระดับ 1)",
+                "risk": "อันตรายระดับที่ 1"
+            }, {
+                "min": 25.0,
+                "max": 30.0,
+                "meaning": "อ้วน (โรคอ้วนระดับ 2)",
+                "risk": "อันตรายระดับที่ 2"
+            }, {
+                "min": 30.0,
+                "max": 100.0,
+                "meaning": "อ้วนมาก (โรคอ้วนระดับ 3)",
+                "risk": "อันตรายระดับที่ 3"
+            }];
+
+            $scope.bmicalculator = function() {
+                var tmp = $scope.h / 100;
+                $scope.bmi = $scope.w / (tmp * tmp);
+            };
+
+
+        });
+    </script>
+
 </head>
 
 <body>
-    <input type="text" ng-model="yourname" placeholder="Enter a name here">
-    <h1>Hello {{yourname}}</h1>
-    <button type="button" class="btn btn-primary">Primary</button>
+    <h2>ตารางแปลผลค่า BMI</h2>
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <td><strong>BMI kg/m2</strong></td>
+                <td><strong>อยู่ในเกณท์</strong></td>
+                <td><strong>ภาวะเสี่ยงต่อโรค</strong></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="tmp in bmidata">
+                <td>มากกว่า {{tmp.min}} แต่น้อยกว่า {{tmp.max}}</td>
+                <td>{{tmp.meaning}}</td>
+                <td>{{tmp.risk}}</td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 
 </html>
