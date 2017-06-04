@@ -17,6 +17,9 @@
         var app = angular.module("myApp", []);
         app.controller('myCtrl', function($scope) {
 
+            $scope.h = 180;
+            $scope.w = 80;
+
             $scope.bmidata = [{
                 "min": 0,
                 "max": 18.5,
@@ -112,7 +115,7 @@
         </tbody>
     </table>
 
-    <div class="text-center">
+    <div class="text-center" ng-init="h=190;w=70;">
         <form ng-submit="bmicalculator()">
             <div class="form-group">
                 <label for="weight">Weight (KG)</label>
