@@ -114,15 +114,15 @@
         <form ng-submit="bmicalculator()">
             <div class="form-group">
                 <label for="weight">Weight (KG)</label>
-                <input required type="number" ng-model="w" class="form-control" id="weight" placeholder="Please input your weight (KG)">
+                <input required type="number" ng-model="w" ng-change="bmicalculator()" class="form-control" id="weight" placeholder="Please input your weight (KG)">
             </div>
             <div class="form-group">
                 <label for="height">Height (CM)</label>
-                <input required type="number" ng-model="h" class="form-control" id="height" placeholder="Please input your height (KG)">
+                <input required type="number" ng-model="h" ng-change="bmicalculator()" class="form-control" id="height" placeholder="Please input your height (KG)">
             </div>
             <button type="submit" class="btn btn-default">Submit</button>
         </form>
-        <h1><span id="numberanimation"> {{bmi | number:2}} </span> {{meaning}}</h1>
+        <h1 ng-if="bmi > 0 && bmi <= 100"> <span id="numberanimation"> {{bmi | number:2}} </span> {{meaning}}</h1>
     </div>
 
 </body>
